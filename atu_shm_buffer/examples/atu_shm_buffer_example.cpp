@@ -9,7 +9,7 @@
  */
 
 #include <iostream>
-#include "atu_shm_buffer.h"
+#include "../src/atu_shm_buffer.h"
 using atu_libs::atu_shm_buffer::atu_shm_buffer;
 
 #define SHM_BUFFER_LEN			128

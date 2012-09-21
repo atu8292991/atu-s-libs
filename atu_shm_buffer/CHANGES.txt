@@ -1,6 +1,7 @@
 2012-09-21 version 1.0.1:
-	* add a new interface for read() and write() using std::string
-	* add Makefile
+	* Add a new interface for read() and write() using std::string
+	* Add Makefile
+	* Re-organize file structure
 
 2012-09-19 version 1.0.0:
 	* First public release.
