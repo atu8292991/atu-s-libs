@@ -133,6 +133,23 @@ void atu_shm_buffer::read(char *buffer, size_t len)
 	memcpy((void *)buffer, m_buf, len);
 	sem_post(m_sem);
 }
+/*
+ *  Read from shared memory. Use a semaphore with the same name to synchronize.
+ *  @str:    the reference of string to store the content.
+ *  @len:    the length of bytes read from shared memory.
+ */
+void atu_shm_buffer::read(std::string &str, size_t len)
+{
+	if (len > m_len)
+	{
+		fprintf(stderr, "[read] Buffer is truncated! From %d to %d bytes.\n",
+				(int)len, (int)m_len);
+		len = m_len;
+	}
+	sem_wait(m_sem);
+	str.assign((char *)m_buf, len);
+	sem_post(m_sem);
+}
 
 /*
  *  Write bytes to shared memroy. Use a semaphore with the same name to synchronize.
@@ -149,6 +166,24 @@ void atu_shm_buffer::write(const void* buffer, size_t len)
 	}
 	sem_wait(m_sem);
 	memcpy(m_buf, buffer, len);
+	sem_post(m_sem);
+}
+
+/*
+ *  Write bytes to shared memroy. Use a semaphore with the same name to synchronize.
+ *  @str:      the reference of string with contents to write to shared memory.
+ *  @len:      the length of bytes write to shared memory.
+ */
+void atu_shm_buffer::write(std::string &str, size_t len)
+{
+	if (len > m_len)
+	{
+		fprintf(stderr, "[write] Buffer is truncated! From %d to %d bytes.\n",
+				(int)len, (int)m_len);
+		len = m_len;
+	}
+	sem_wait(m_sem);
+	memcpy(m_buf, str.c_str(), len);
 	sem_post(m_sem);
 }
 

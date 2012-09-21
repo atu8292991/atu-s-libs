@@ -48,14 +48,26 @@ public:
 	 */
 	void read(char *buf, size_t len);
 	/*
+	 *  Read from shared memory. Use a semaphore with the same name to synchronize.
+	 *  @str:    the reference of string to store the content.
+	 *  @len:    the length of bytes read from shared memory.
+	 */
+	void read(std::string &str, size_t len);
+	/*
 	 *  Write bytes to shared memroy. Use a semaphore with the same name to synchronize.
 	 *  @content:  the point to a buffer with contents, the buffer must be allocated.
 	 *  @len:      the length of bytes write to shared memory.
 	 */
 	void write(const void *content, size_t len);
 	/*
-	 *  Unlink the shared memory and semaphore from linux kernel.
+	 *  Write bytes to shared memroy. Use a semaphore with the same name to synchronize.
+	 *  @str:      the reference of string with contents to write to shared memory.
+	 *  @len:      the length of bytes write to shared memory.
 	 */
+	void write(std::string &str, size_t len);
+	/*
+	 *  Unlink the shared memory and semaphore from linux kernel.
+	 */;
 	void unlink(void);
 private:
 	void *m_buf;
